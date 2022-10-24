@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { map, switchMap, take, tap } from "rxjs/operators";
 import { DomSanitizer } from "@angular/platform-browser";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 
 import { HttpService } from "../../../core/http/http.service";
 import { MainService } from "../../../shared/services/main.service";
@@ -64,7 +64,7 @@ export class UploadFileService {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private httpService: HttpService,
     private mainService: MainService,
     private sanitizer: DomSanitizer
@@ -82,7 +82,7 @@ export class UploadFileService {
     return this.loadedVideo$.next(state);
   }
 
-  public buildUploadAndConvertForm(): FormGroup {
+  public buildUploadAndConvertForm(): UntypedFormGroup {
     return this.fb.group({
       imageInput: this.fb.control(null, [Validators.required]),
       resolution: this.fb.control(Res.Medium, Validators.required),
@@ -179,7 +179,7 @@ export class UploadFileService {
     );
   }
 
-  public initConvertion(videoUploadForm: FormGroup): void {
+  public initConvertion(videoUploadForm: UntypedFormGroup): void {
     this.converting$.next(true);
     const { conversionFrameRate, resolution } = videoUploadForm.value;
     const options: VideoConverterOptions = {

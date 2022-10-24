@@ -181,7 +181,9 @@
             "typescriptMismatch": false,
             "versionMismatch": false
         },
-        "defaultCollection": "@nrwl/angular"
+        "schematicCollections": [
+          "@nrwl/angular"
+        ]
     },
     "schematics": {
         "@nrwl/angular:application": {
@@ -194,6 +196,5 @@
         "@schematics/angular:component": {
             "styleext": "scss"
         }
-    },
-    "defaultProject": "frontend"
+    }
 }

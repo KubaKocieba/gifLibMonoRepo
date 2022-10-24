@@ -6,7 +6,7 @@ import {
   filter,
   map,
 } from "rxjs/operators";
-import { FormControl, Validators } from "@angular/forms";
+import { UntypedFormControl, Validators } from "@angular/forms";
 
 import { MainService } from "../../shared/services/main.service";
 
@@ -20,7 +20,7 @@ import { GIFObject } from "../../core/types/gif-object.type";
 })
 export class SearchGiphyComponent implements OnInit, OnDestroy {
   public searchResults;
-  public searchControl = new FormControl("", Validators.required);
+  public searchControl = new UntypedFormControl("", Validators.required);
   public actualTerm = null;
 
   private searchInput = new Subject<string>();

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { AuthService } from "../../shared/services/auth.service";
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from "@angular/forms";
 
@@ -14,18 +14,18 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public forgetPassStyle = {
     color: "blue",
     cursor: "pointer",
   };
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {}
+  constructor(private auth: AuthService, private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: new FormControl(null, [Validators.email, Validators.required]),
-      password: new FormControl(null, [Validators.required]),
+      email: new UntypedFormControl(null, [Validators.email, Validators.required]),
+      password: new UntypedFormControl(null, [Validators.required]),
     });
   }
 

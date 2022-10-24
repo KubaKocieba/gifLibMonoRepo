@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 
 import { MainService } from "../../shared/services/main.service";
 import { FRAME_RATES } from "./shared/video-converter-options.interfaces";
@@ -19,7 +19,7 @@ export const DEFAULT_folder_VALUE =
 export class UploadFileComponent implements OnInit {
   @ViewChild("uploadStepper") private myStepper: MatStepper;
 
-  public imageUploadForm: FormGroup;
+  public imageUploadForm: UntypedFormGroup;
   public frameRates = Object.values(FRAME_RATES);
   public resolutions: string[] = [];
   public loadedVideo$;
@@ -130,12 +130,12 @@ export class UploadFileComponent implements OnInit {
     this.uploadService.convertedURL = null;
   }
 
-  get tagsControl(): FormControl {
-    return this.imageUploadForm.get("tags") as FormControl;
+  get tagsControl(): UntypedFormControl {
+    return this.imageUploadForm.get("tags") as UntypedFormControl;
   }
 
   get folder(): string {
-    return (this.imageUploadForm.get("folder") as FormControl).value;
+    return (this.imageUploadForm.get("folder") as UntypedFormControl).value;
   }
 
   get folderIsSet(): boolean {
