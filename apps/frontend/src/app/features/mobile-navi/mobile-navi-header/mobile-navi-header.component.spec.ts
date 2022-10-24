@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { MobileNaviHeaderComponent } from "./mobile-navi-header.component";
 
@@ -6,7 +6,7 @@ describe("MobileNaviComponent", () => {
   let component: MobileNaviHeaderComponent;
   let fixture: ComponentFixture<MobileNaviHeaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MobileNaviHeaderComponent],
     }).compileComponents();

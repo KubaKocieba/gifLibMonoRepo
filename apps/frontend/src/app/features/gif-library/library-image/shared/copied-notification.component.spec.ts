@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CopiedNotificationComponent } from './copied-notification.component';
 
@@ -6,7 +6,7 @@ describe('CopiedNotificationComponent', () => {
   let component: CopiedNotificationComponent;
   let fixture: ComponentFixture<CopiedNotificationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CopiedNotificationComponent ]
     })
