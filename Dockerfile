@@ -363,7 +363,7 @@ RUN \
     LD_LIBRARY_PATH=/usr/local/lib ffmpeg -buildconf
 # Create app directory
 
-FROM node:12-alpine as builder
+FROM node:16-alpine as builder
 WORKDIR /usr/src/app
 
 # Copy package.json, yarn.lock files and download deps
@@ -371,15 +371,12 @@ COPY package*.json ./
 RUN npm install -g @angular/cli
 RUN npm install
 
-COPY . .
-
 # Set the Node environment
 ARG node_env=production
 ENV NODE_ENV $node_env
 
 # Build the app
-ARG project
-RUN ng build $project --prod
+RUN ng build frontend
 CMD [ "ng", "serve", "api" ]
 
 # Start a new stage from nginx
@@ -389,7 +386,7 @@ WORKDIR /dist
 
 # Copy build artifacts from the previous stage
 ARG project
-COPY --from=builder /usr/src/app/dist/apps/$project /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/apps/frontend /usr/share/nginx/html
 
 # Set the port number and expose it
 ARG port=80
