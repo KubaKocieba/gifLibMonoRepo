@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { User } from "firebase";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Observable } from "rxjs";
+import firebase from "firebase/compat";
+import User = firebase.User;
 
 @Component({
   selector: "mobile-navi-header",

@@ -4,11 +4,7 @@ import { AboutComponent } from "./features/about/about.component";
 import { ImageDetailComponent } from "./features/image-detail/image-detail.component";
 import { UploadFileComponent } from "./features/upload-file/upload-file.component";
 import { LoginComponent } from "./features/login/login.component";
-import {
-  AngularFireAuthGuard,
-  redirectLoggedInTo,
-  redirectUnauthorizedTo,
-} from "@angular/fire/auth-guard";
+import { redirectLoggedInTo, AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
 import { RegisterComponent } from "./features/register/register.component";
 import { EmailVerifiedGuard } from "./core/guards/email-verified.guard";
 import { EmailNotVerifiedComponent } from "./features/login/email-not-verified/email-not-verified.component";

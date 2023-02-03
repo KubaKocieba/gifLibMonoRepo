@@ -7,15 +7,42 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {
-    "frontend-e2e": {
-      "tags": []
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
-    "frontend": {
-      "tags": []
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
     },
-    "api": {
-      "tags": []
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "schematicCollections": ["@nrwl/angular"]
+  },
+  "targetDefaults": {
+    "e2e": {
+      "inputs": ["default", "^default"]
+    },
+    "test": {
+      "inputs": ["default", "^default"]
     }
   }
 }

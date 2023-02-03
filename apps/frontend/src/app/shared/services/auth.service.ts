@@ -1,13 +1,14 @@
 import { Injectable, NgZone } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { auth as firebaseAuth, firestore, User } from "firebase/app";
 import { forkJoin, from, Observable, of } from "rxjs";
-import { map, switchMap, tap } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 
 import { LoginErrorComponent } from "../../features/login/error/login-error/login-error.component";
 import { NotificationService } from "./notification-service";
+import { AngularFirestore, DocumentSnapshot } from "@angular/fire/compat/firestore";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth"
+import firebase from 'firebase/compat/app';
+import User = firebase.User;
 
 @Injectable({
   providedIn: "root",
@@ -15,7 +16,6 @@ import { NotificationService } from "./notification-service";
 export class AuthService {
   constructor(
     private firestore: AngularFirestore,
-    private angularFireAuth: AngularFireAuth,
     private notificationService: NotificationService,
     private router: Router,
     private ngZone: NgZone
@@ -23,8 +23,10 @@ export class AuthService {
 
   public signInByEmailAndPass(email: string, password: string): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
+    const auth = getAuth();
 
-    from(this.angularFireAuth.signInWithEmailAndPassword(email, password))
+
+    from(signInWithEmailAndPassword(auth, email, password))
       .pipe(
         map(({ user }) => user.uid),
         switchMap((userId: string) => firebaseShot(userId))
@@ -37,10 +39,13 @@ export class AuthService {
 
   public googleSignIn(): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider()
 
     from(
-      this.angularFireAuth.signInWithPopup(
-        new firebaseAuth.GoogleAuthProvider()
+      signInWithPopup(
+        auth,
+        provider
       )
     )
       .pipe(
@@ -52,10 +57,13 @@ export class AuthService {
 
   public facebookSignIn(): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
+    const auth = getAuth();
+    const provider = new FacebookAuthProvider();
 
     from(
-      this.angularFireAuth.signInWithPopup(
-        new firebaseAuth.FacebookAuthProvider()
+      signInWithPopup(
+        auth,
+        provider
       )
     )
       .pipe(
@@ -72,14 +80,17 @@ export class AuthService {
   }
 
   public signOut(): void {
-    this.angularFireAuth.signOut().then(() => this.router.navigate(["signIn"]));
+    const auth = getAuth();
+
+    signOut(auth).then(() => this.router.navigate(["signIn"]));
   }
 
   public createUser(email: string, password: string): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
     const sendVerification = this.verificationEmailResend();
+    const auth = getAuth();
 
-    from(this.angularFireAuth.createUserWithEmailAndPassword(email, password))
+    from(createUserWithEmailAndPassword(auth, email, password))
       .pipe(
         switchMap(({ user }) =>
           forkJoin(sendVerification(user), firebaseShot(user.uid))
@@ -104,9 +115,8 @@ export class AuthService {
   }
 
   public sendResetPassword(email: string): void {
-    this.angularFireAuth
-      .sendPasswordResetEmail(email)
-      .then(() => this.resetPassNotification());
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email).then(() => this.resetPassNotification());
   }
 
   public verificationEmailResend(): any {
@@ -126,13 +136,13 @@ export class AuthService {
   private createLibraryIfNotExistingForUser() {
     return (
       userId: string
-    ): Observable<firestore.DocumentSnapshot<firestore.DocumentData> | null> =>
+    ): Observable<void> =>
       this.firestore
-        .doc("users/" + userId)
+        .doc<unknown>("users/" + userId)
         .get()
         .pipe(
           switchMap(
-            (data: firestore.DocumentSnapshot<firestore.DocumentData>) => {
+            (data: DocumentSnapshot<unknown>) => {
               if (data.data()) {
                 return of(null);
               } else {

@@ -1,19 +1,18 @@
 import { Injectable } from "@angular/core";
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from "@angular/fire/firestore";
 import { from, Observable, of, Subject } from "rxjs";
 import { filter, map, switchMap, take } from "rxjs/operators";
-import { MatSnackBarConfig } from "@angular/material/snack-bar";
+import { MatLegacySnackBarConfig as MatSnackBarConfig } from "@angular/material/legacy-snack-bar";
 
 import { LibraryType } from "../../features/gif-library/shared/library.type";
 import { GIFObject } from "../../core/types/gif-object.type";
 import { LibrarySaveSnackComponent } from "../components/library-save-snack/library-save-snack.component";
 import { NotificationService } from "./notification-service";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { firestore, User } from "firebase";
 import { LoginErrorComponent } from "../../features/login/error/login-error/login-error.component";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import firebase from "firebase/compat";
+import firestore = firebase.firestore;
+import User = firebase.User;
 
 @Injectable({
   providedIn: "root",

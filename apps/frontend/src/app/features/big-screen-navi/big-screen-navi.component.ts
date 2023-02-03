@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { NavigationEnd, Router } from "@angular/router";
-import { User } from "firebase";
 import { Observable } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
 import { AuthService } from "../../shared/services/auth.service";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import firebase from "firebase/compat";
+import User = firebase.User;
 
 @Component({
   selector: "big-screen-navi",
