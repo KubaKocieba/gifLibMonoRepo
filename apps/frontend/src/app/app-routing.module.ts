@@ -40,8 +40,7 @@ const routes: Routes = [
     path: "search",
     canActivate: [AngularFireAuthGuard, EmailVerifiedGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
-    loadChildren:
-      "./features/search-giphy/search-giphy.module#SearchGiphyModule",
+    loadChildren: () => import('./features/search-giphy/search-giphy.module').then(mod => mod.SearchGiphyModule)
   },
   { path: "about", component: AboutComponent },
   {
@@ -59,7 +58,7 @@ const routes: Routes = [
     path: "edit",
     canActivate: [AngularFireAuthGuard, EmailVerifiedGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
-    loadChildren: "./features/edit-gif/edit-gif.module#EditGifModule",
+    loadChildren: () => import('./features/edit-gif/edit-gif.module').then(mod => mod.EditGifModule)
   },
   { path: "**", redirectTo: "" },
 ];
