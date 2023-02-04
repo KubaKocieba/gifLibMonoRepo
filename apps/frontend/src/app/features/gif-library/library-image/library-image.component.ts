@@ -8,10 +8,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { GIFObject } from "../../../core/types/gif-object.type";
-import { Params, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { CopiedNotificationComponent } from "./shared/copied-notification.component";
 import { MainService } from "../../../shared/services/main.service";
+import { CopiedNotificationComponent } from "./shared/copied-notification.component";
 
 interface DetailsCluesInterface {
   category: string;
@@ -31,6 +31,7 @@ export class LibraryImageComponent implements OnInit {
 
   public imageSrc: string;
   public toolsVisible = false;
+  isMobile = /android/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   constructor(
     private router: Router,
@@ -74,21 +75,21 @@ export class LibraryImageComponent implements OnInit {
     this.toolsVisible = !this.toolsVisible;
   }
 
-  public copyUrl(): void {
-    this.URLtextarea.nativeElement.select();
-    document.execCommand("copy");
+  public async copyUrl(): Promise<void> {
+    const img = document.createElement('img');
+    img.src = this.img.images.original.url;
+    const div = document.createElement('div')
+    div.contentEditable = 'true';
+    div.appendChild(img);
+    document.body.appendChild(div);
+    const range = document.createRange();
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    range.selectNodeContents(div);
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+    document.body.removeChild(div);
     this.notify.openFromComponent(CopiedNotificationComponent);
-  }
-
-  public setDimensions(): Params {
-    const readHeight = parseInt(this.getHeight(), 10);
-    const readWidth = parseInt(this.getWidth(), 10);
-    const wRatio = readWidth / readHeight;
-    const height = readHeight > 200 ? 200 : readHeight < 100 ? 200 : readHeight;
-
-    const width = readHeight > 200 ? 200 : readHeight < 100 ? 200 : readHeight;
-    console.log(width);
-
-    return { height: height + "px", width: width + "px" };
   }
 }

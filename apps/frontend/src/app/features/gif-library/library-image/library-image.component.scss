@@ -12,11 +12,13 @@ $bg_color: black;
   justify-items: center;
   align-items: center;
   border: 2px solid #c2185b75;
+  z-index: 1;
 
   .ImageTools {
     position: absolute;
     right: 0;
     top: 0;
+    z-index: 2;
 
     & > div {
       padding: 10px 10px;
@@ -50,6 +52,10 @@ $bg_color: black;
 .ImageWithTools,
 .ImageWithTools img {
   border-radius: 5px;
+}
+
+.ImageWithTools {
+  min-height: 180px;
 }
 
 @include rwd_mobile_one_breakpoint {

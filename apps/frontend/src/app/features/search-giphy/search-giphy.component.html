@@ -14,8 +14,8 @@
           [formControl]="searchControl" #searchInput>
         <mat-error *ngIf="searchControl.invalid">You must enter a value</mat-error>
       </mat-form-field>
-      <button mat-button (click)="clearTerms()">
-        <mat-icon>clear</mat-icon>
+      <button mat-stroked-button (click)="clearTerms()">
+       CLR
       </button>
     </div>
     <div id="search">

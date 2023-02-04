@@ -7,7 +7,6 @@
       <mat-vertical-stepper #uploadStepper>
         <mat-step>
           <div class="UploadContainer">
-
             <ng-template matStepLabel>Click button below and select a video file.</ng-template>
             <input type="file" accept="video/*" (change)="onFileInputChange($event)" class="HiddenFileInput"
               #fileInput />
@@ -22,7 +21,6 @@
             <mat-error>
               {{ imageUploadForm.errors }}
             </mat-error>
-
             <div class="UploadedAndConverted">
               <div class="ImagePreview" [hidden]="!(loadedVideo$ | async)">
                 <h1>
@@ -111,7 +109,7 @@
                 <div class="Chips">
                   <mat-chip-listbox>
                     Available folders:
-                    <mat-chip-option *ngFor="let folder of availableFolders" (click)="changeFolder(folder)">{{ folder }}
+                    <mat-chip-option *ngFor="let folder of availableFolders.concat(tags)" (click)="changeFolder(folder)">{{ folder }}
                     </mat-chip-option>
                   </mat-chip-listbox>
                 </div>
