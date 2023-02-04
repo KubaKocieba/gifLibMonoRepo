@@ -1,5 +1,5 @@
 import { Component, Injectable } from "@angular/core";
-import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarConfig as MatSnackBarConfig } from "@angular/material/legacy-snack-bar";
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material/snack-bar";
 import { ComponentType } from "@angular/cdk/overlay";
 
 // TODO: Fix notification style on mobiles

@@ -1,20 +1,9 @@
 version: '3.8'
 services:
-  frontend:
+ api:
     build:
       context: ./
-      dockerfile: Dockerfile.angular
-      args:
-        project: frontend
-    ports:
-      - 8000:80
-    restart: on-failure
-    networks:
-      - monorepo_net
-  api:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile.nest
+      dockerfile: ./Dockerfile
       args:
         project: api
     ports:
@@ -22,6 +11,8 @@ services:
     restart: on-failure
     networks:
       - monorepo_net
+    volumes:
+      - ./:/usr/src/app
 
 networks:
   monorepo_net:

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { from, Observable, of, Subject } from "rxjs";
 import { filter, map, switchMap, take } from "rxjs/operators";
-import { MatLegacySnackBarConfig as MatSnackBarConfig } from "@angular/material/legacy-snack-bar";
+import { MatSnackBarConfig } from "@angular/material/snack-bar";
 
 import { LibraryType } from "../../features/gif-library/shared/library.type";
 import { GIFObject } from "../../core/types/gif-object.type";

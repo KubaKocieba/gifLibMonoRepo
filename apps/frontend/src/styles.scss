@@ -56,12 +56,12 @@ element.style {
   width: 160px;
 }
 
-.mat-tab-group.mat-primary .mat-ink-bar,
-.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+.mat-mdc-tab-group.mat-primary .mat-ink-bar,
+.mat-mdc-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: $pallete-light-green;
 }
 
-.MobileSideNavContainer .mat-list-base {
+.MobileSideNavContainer .mat-mdc-list-base {
   padding: 0;
 }
 
@@ -141,7 +141,7 @@ element.style {
       margin: 0 0;
       font-size: 0.9em;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-appearance-legacy .mat-form-field-wrapper {
       padding-bottom: 0.95em;
     }
@@ -167,7 +167,7 @@ element.style {
     position: initial !important;
   }
 
-  .mat-snack-bar-container {
+  .mat-mdc-snack-bar-container {
     img {
       max-height: 200px;
       height: auto;

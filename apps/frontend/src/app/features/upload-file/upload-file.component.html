@@ -1,4 +1,4 @@
-<mat-card class="Upload">
+<mat-card appearance="outlined" class="Upload">
   <mat-card-header>
     <h3>Upload a file & convert it to gif</h3>
   </mat-card-header>
@@ -109,17 +109,17 @@
                   <button mat-stroked-button type="button" (click)="addTag()">Add tag</button>
                 </div>
                 <div class="Chips">
-                  <mat-chip-list>
+                  <mat-chip-listbox>
                     Available folders:
-                    <mat-chip *ngFor="let folder of availableFolders" (click)="changeFolder(folder)">{{ folder }}
-                    </mat-chip>
-                  </mat-chip-list>
+                    <mat-chip-option *ngFor="let folder of availableFolders" (click)="changeFolder(folder)">{{ folder }}
+                    </mat-chip-option>
+                  </mat-chip-listbox>
                 </div>
                 <div class="Chips">
-                  <mat-chip-list>
+                  <mat-chip-listbox>
                     Tags:
-                    <mat-chip *ngFor="let tag of tags" (click)="changeFolder(tag)">{{ tag }}</mat-chip>
-                  </mat-chip-list>
+                    <mat-chip-option *ngFor="let tag of tags" (click)="changeFolder(tag)">{{ tag }}</mat-chip-option>
+                  </mat-chip-listbox>
                 </div>
                 <div id="FolderSelect">
                   <h3>Selected folder: </h3>

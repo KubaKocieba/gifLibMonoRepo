@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { GIFObject } from "../../../core/types/gif-object.type";
 import { Params, Router } from "@angular/router";
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { CopiedNotificationComponent } from "./shared/copied-notification.component";
 import { MainService } from "../../../shared/services/main.service";
 

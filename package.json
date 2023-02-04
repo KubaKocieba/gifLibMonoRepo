@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "serve-app": "npm run api & npm run frontend",
     "ng": "ng",
     "frontend": "ng serve frontend --host=0.0.0.0 --disable-host-check",
-    "api": "ng serve api",
+    "api": "ng build api && docker compose up -d",
     "build": "ng build",
     "test": "ng test",
     "lint": "nx lint && ng lint",

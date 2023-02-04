@@ -14,9 +14,9 @@ import { LibrarySortPipe } from "./features/gif-library/library-sort.pipe";
 import { LoadingIndicatorComponent } from "./shared/components/loading-indicator/loading-indicator.component";
 import { ImageDetailComponent } from "./features/image-detail/image-detail.component";
 import {
-  MAT_LEGACY_SNACK_BAR_DEFAULT_OPTIONS as MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatLegacySnackBarModule as MatSnackBarModule,
-} from "@angular/material/legacy-snack-bar";
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
+} from "@angular/material/snack-bar";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { LibrarySaveSnackComponent } from "./shared/components/library-save-snack/library-save-snack.component";
 import { ServiceWorkerModule } from "@angular/service-worker";

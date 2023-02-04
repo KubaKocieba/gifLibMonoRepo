@@ -5,7 +5,7 @@ FROM node:16-alpine as builder
 WORKDIR /usr/src/app
 
 RUN apk add --update --no-cache gcc g++ make curl py-pip
-# Copy package.json, yarn.lock files and download deps
+# Copy package_nope.json, yarn.lock files and download deps
 COPY package*.json ./
 RUN npm install -g @angular/cli
 RUN npm install
@@ -19,7 +19,7 @@ ENV NODE_ENV $node_env
 
 # Build the app
 ARG project
-RUN ng build $project
+RUN ng build frontend
 
 # Start a new stage from nginx
 FROM nginx:alpine
