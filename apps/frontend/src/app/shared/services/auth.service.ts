@@ -7,7 +7,8 @@ import { LoginErrorComponent } from "../../features/login/error/login-error/logi
 import { NotificationService } from "./notification-service";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/compat/firestore";
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth"
-import firebase from 'firebase/compat/app';
+import { sendEmailVerification } from "@angular/fire/auth";
+import firebase from "firebase/compat";
 import User = firebase.User;
 
 @Injectable({
@@ -24,7 +25,6 @@ export class AuthService {
   public signInByEmailAndPass(email: string, password: string): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
     const auth = getAuth();
-
 
     from(signInWithEmailAndPassword(auth, email, password))
       .pipe(
@@ -87,14 +87,14 @@ export class AuthService {
 
   public createUser(email: string, password: string): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
-    const sendVerification = this.verificationEmailResend();
+    const sendVerification = (user) => this.verificationEmailResend(user);
     const auth = getAuth();
 
     from(createUserWithEmailAndPassword(auth, email, password))
       .pipe(
-        switchMap(({ user }) =>
-          forkJoin(sendVerification(user), firebaseShot(user.uid))
-        )
+        switchMap(({ user }) => {
+          return forkJoin(sendVerification(user), firebaseShot(user.uid))
+        })
       )
       .subscribe(
         () => {
@@ -119,8 +119,8 @@ export class AuthService {
     sendPasswordResetEmail(auth, email).then(() => this.resetPassNotification());
   }
 
-  public verificationEmailResend(): any {
-    return (user: User) => from(user.sendEmailVerification());
+  public verificationEmailResend(user: User): any {
+    return from(sendEmailVerification(user));
   }
 
   public noPassResetEmail(): void {

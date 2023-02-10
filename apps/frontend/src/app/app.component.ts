@@ -16,10 +16,11 @@ export class AppComponent implements OnInit {
   libraryOpened = false;
   mobileNaviSidenavOpened = false;
   loggedIn$: Observable<User>;
+  isMobile = /android/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 
   constructor(
     private angularFireAuth: AngularFireAuth,
-    private authService: AuthService
   ) {}
 
   ngOnInit() {

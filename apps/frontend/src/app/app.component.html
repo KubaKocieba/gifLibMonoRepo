@@ -21,9 +21,11 @@
     <div class="Router">
       <router-outlet></router-outlet>
     </div>
-    <div class="GifLibrary" *ngIf="loggedIn$ | async">
-      <app-gif-library></app-gif-library>
-    </div>
+    <ng-container *ngIf="!isMobile">
+      <div class="GifLibrary" *ngIf="loggedIn$ | async">
+        <app-gif-library></app-gif-library>
+      </div>
+    </ng-container>
   </div>
 </div>
 
