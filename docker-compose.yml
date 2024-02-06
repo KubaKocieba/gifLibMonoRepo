@@ -1,18 +1,30 @@
-version: '3.8'
+version: "3.8"
+
 services:
- api:
+  gifster_api:
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
       args:
-        project: api
+        project: gifster_api
     ports:
-      - 3333:3333
+      - "3333:3333"
     restart: on-failure
     networks:
       - monorepo_net
-    volumes:
-      - ./:/usr/src/app
+
+  gifster_frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.angular
+      args:
+        project: gifster_frontend
+    ports:
+      - "4200:80" # Map container port 80 to host port 4200
+    networks:
+      - monorepo_net
+    depends_on:
+      - gifster_api
 
 networks:
   monorepo_net:
