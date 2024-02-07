@@ -1,3 +1,8 @@
+PLEASE INSTALL PACKAGES FIRST AND RUN
+
+1. ng build api
+2. ng build frontend
+
 # GifLibMonoRepo
 
 This project was generated using [Nx](https://nx.dev).
