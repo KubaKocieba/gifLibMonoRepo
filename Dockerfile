@@ -6,7 +6,6 @@ RUN npm i -g @nestjs/cli
 COPY package-api.json ./package.json
 RUN npm i
 COPY . .
-RUN ng build --project api
 
 # Set the Node environment
 ARG node_env=production

@@ -6,7 +6,7 @@
     "serve-app": "npm run api & npm run frontend",
     "ng": "ng",
     "frontend": "ng serve frontend --host=0.0.0.0 --disable-host-check",
-    "api": "ng build api && docker compose up -d",
+    "api": "ng build api && node ./dist/apps/api/main.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "nx lint && ng lint",
