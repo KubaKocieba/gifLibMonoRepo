@@ -24,7 +24,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: new UntypedFormControl(null, [Validators.email, Validators.required]),
+      email: new UntypedFormControl(null, [
+        Validators.email,
+        Validators.required,
+      ]),
       password: new UntypedFormControl(null, [Validators.required]),
     });
   }
@@ -57,9 +60,5 @@ export class LoginComponent implements OnInit {
 
   public googleLogin(): void {
     this.auth.googleSignIn();
-  }
-
-  public facebookLogin(): void {
-    this.auth.facebookSignIn();
   }
 }

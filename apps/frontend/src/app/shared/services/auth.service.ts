@@ -5,8 +5,20 @@ import { map, switchMap } from "rxjs/operators";
 
 import { LoginErrorComponent } from "../../features/login/error/login-error/login-error.component";
 import { NotificationService } from "./notification-service";
-import { AngularFirestore, DocumentSnapshot } from "@angular/fire/compat/firestore";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth"
+import {
+  AngularFirestore,
+  DocumentSnapshot,
+} from "@angular/fire/compat/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
 import { sendEmailVerification } from "@angular/fire/auth";
 import firebase from "firebase/compat";
 import User = firebase.User;
@@ -40,32 +52,9 @@ export class AuthService {
   public googleSignIn(): void {
     const firebaseShot = this.createLibraryIfNotExistingForUser();
     const auth = getAuth();
-    const provider = new GoogleAuthProvider()
+    const provider = new GoogleAuthProvider();
 
-    from(
-      signInWithPopup(
-        auth,
-        provider
-      )
-    )
-      .pipe(
-        map(({ user }) => user.uid),
-        switchMap((userId: string) => firebaseShot(userId))
-      )
-      .subscribe(() => this.goToSearch());
-  }
-
-  public facebookSignIn(): void {
-    const firebaseShot = this.createLibraryIfNotExistingForUser();
-    const auth = getAuth();
-    const provider = new FacebookAuthProvider();
-
-    from(
-      signInWithPopup(
-        auth,
-        provider
-      )
-    )
+    from(signInWithPopup(auth, provider))
       .pipe(
         map(({ user }) => user.uid),
         switchMap((userId: string) => firebaseShot(userId))
@@ -93,7 +82,7 @@ export class AuthService {
     from(createUserWithEmailAndPassword(auth, email, password))
       .pipe(
         switchMap(({ user }) => {
-          return forkJoin(sendVerification(user), firebaseShot(user.uid))
+          return forkJoin(sendVerification(user), firebaseShot(user.uid));
         })
       )
       .subscribe(
@@ -116,7 +105,9 @@ export class AuthService {
 
   public sendResetPassword(email: string): void {
     const auth = getAuth();
-    sendPasswordResetEmail(auth, email).then(() => this.resetPassNotification());
+    sendPasswordResetEmail(auth, email).then(() =>
+      this.resetPassNotification()
+    );
   }
 
   public verificationEmailResend(user: User): any {
@@ -134,29 +125,25 @@ export class AuthService {
   }
 
   private createLibraryIfNotExistingForUser() {
-    return (
-      userId: string
-    ): Observable<void> =>
+    return (userId: string): Observable<void> =>
       this.firestore
         .doc<unknown>("users/" + userId)
         .get()
         .pipe(
-          switchMap(
-            (data: DocumentSnapshot<unknown>) => {
-              if (data.data()) {
-                return of(null);
-              } else {
-                return from(
-                  this.firestore.firestore
-                    .batch()
-                    .set(this.firestore.firestore.doc("users/" + userId), {
-                      library: {},
-                    })
-                    .commit()
-                );
-              }
+          switchMap((data: DocumentSnapshot<unknown>) => {
+            if (data.data()) {
+              return of(null);
+            } else {
+              return from(
+                this.firestore.firestore
+                  .batch()
+                  .set(this.firestore.firestore.doc("users/" + userId), {
+                    library: {},
+                  })
+                  .commit()
+              );
             }
-          )
+          })
         );
   }
 }
